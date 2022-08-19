@@ -10,19 +10,15 @@ This is a template repository and you can make your own copy by following the in
 ### About the tooling on the day:
 - Azure Developer CLI: https://devblogs.microsoft.com/azure-sdk/introducing-the-azure-developer-cli-a-faster-way-to-build-apps-for-the-cloud/
 - Azure Container Apps: https://azure.microsoft.com/en-us/services/container-apps/#overview
-- VS Code Remote Contaners: https://code.visualstudio.com/docs/remote/containers
+- VS Code Remote Containers: https://code.visualstudio.com/docs/remote/containers
 - 3 Musketeers https://3musketeers.io
 
-### Pre-Requsites: 
-
-VS Code: https://code.visualstudio.com/download (Not a surprise)
-
-##### Windows 
+### Pre-Requisites:
+- VS Code: https://code.visualstudio.com/download (Not a surprise)
+##### Windows
 - WSL2: https://docs.microsoft.com/en-us/windows/wsl/install
 - Docker Desktop: https://docs.docker.com/desktop/install/windows-install/
-
-##### MacOs
+##### MacOS
 - Docker Desktop: https://docs.docker.com/desktop/install/mac-install/
-
 ##### Linux
 - Linux: https://docs.docker.com/desktop/install/linux-install/
