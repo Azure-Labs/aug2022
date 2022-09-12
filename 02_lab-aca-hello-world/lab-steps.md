@@ -1,7 +1,9 @@
 
 ## complete steps and outline of the lab
 
---> Better example for revision https://gist.github.com/gbaeke/8b3ec20da98c6d579e0ac43113d1853e
+TODO
+Update Revision - Better example for revision https://gist.github.com/gbaeke/8b3ec20da98c6d579e0ac43113d1853e
+Update Bicep example and deployment
 
 <!-- 2.40
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
