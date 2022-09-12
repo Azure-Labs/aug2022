@@ -57,7 +57,6 @@ module apim 'api-management.bicep' = if (deployApim) {
   }
 }
 
-
 // Python App
 module pythonService 'container-http.bicep' = {
   name: '${deployment().name}--${pythonServiceAppName}'
