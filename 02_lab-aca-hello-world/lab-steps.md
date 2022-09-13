@@ -1,7 +1,7 @@
 
 ## LAB ACA Hello World
 
-Azure Container Apps is now generally available. Time for a quick guid
+Azure Container Apps is now generally available. Time for a quick guide
 
 ### Pre-requisites
 
