@@ -70,7 +70,7 @@ Ingress configuration including:
 - Credentials for private container registries
 - Dapr settings
 
-https://docs.microsoft.com/en-us/azure/container-apps/revisions
+link to content: https://docs.microsoft.com/en-us/azure/container-apps/revisions
 
 ### Steps
 
@@ -86,8 +86,3 @@ Lets now deploy a revision to container 2
 
 4. Open /deploy/cli/02_deploy_revision.sh. Replace subscription id
 5. 02_deploy_revision.sh
-
-TODO
-Update Revision - Better example for revision https://gist.github.com/gbaeke/8b3ec20da98c6d579e0ac43113d1853e
-Update Bicep example and deployment
-Update persistent params
