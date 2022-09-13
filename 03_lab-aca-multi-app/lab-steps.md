@@ -34,6 +34,24 @@ Dapr is a CNCF project that helps developers overcome the inherent challenges pr
 
 For more information on using Dapr, see Build microservices with Dapr.
 
+
+### Steps
+
+** Run setup.sh to setup extensions required
+
+Azure Bicep 
+
+1. Open /deploy/cli/01_deploy_initial.sh. Replace subscription id
+2. Run az login for subscription access
+3. Run /deploy/cli/01_deploy_initial.sh
+
+Review the deployment on Azure portal
+
+Lets now deploy a revision to container 2
+
+4. Open /deploy/cli/02_deploy_revision.sh. Replace subscription id
+5. 02_deploy_revision.sh
+
 ## Fork
 https://github.com/Azure-Samples/container-apps-store-api-microservice
 https://github.com/willvelida/reddog-containerapps

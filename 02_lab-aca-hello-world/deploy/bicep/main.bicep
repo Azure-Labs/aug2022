@@ -62,7 +62,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
             env: [
               {
                 name: 'WELCOME'
-                value: 'Welcome to Container Apps 2'
+                value: 'Welcome to Container Apps 1'
               }
             ]
         }

@@ -74,6 +74,8 @@ link to content: https://docs.microsoft.com/en-us/azure/container-apps/revisions
 
 ### Steps
 
+** Run setup.sh to setup extensions required
+
 Azure CLI 
 
 1. Open /deploy/cli/01_deploy_initial.sh. Replace subscription id
@@ -86,3 +88,19 @@ Lets now deploy a revision to container 2
 
 4. Open /deploy/cli/02_deploy_revision.sh. Replace subscription id
 5. 02_deploy_revision.sh
+
+Review the deployment on Azure portal
+
+Bicep
+
+1. Open and run deploy/bicep/01_Deploy.sh
+
+Review the deployment on Azure portal
+
+2. Update line 57 ```      revisionSuffix: 'rev1' ``` to       ```revisionSuffix: 'rev1' ```
+3. Update line 65 ```      value: 'Welcome to Container Apps 1' ``` to       ```value: 'Welcome to Container Apps 2' ```
+4. Comment out line 41-44
+5. Comment in 45 - 52
+6. Open and run deploy/bicep/01_Deploy.sh
+
+Review the deployment on Azure portal
