@@ -22,3 +22,10 @@ This is a template repository and you can make your own copy by following the in
 - Docker Desktop: https://docs.docker.com/desktop/install/mac-install/
 ##### Linux
 - Linux: https://docs.docker.com/desktop/install/linux-install/
+
+
+LABS
+
+- 01_lab-azd - Run thorugh on the features and benefits of using azd
+- 02_lab_aca-hello-world - Initial deploy and setup for revisions. Basics of the deploy
+- 03_labl-aca-multi-app - Deployment with multiple services and DAPR
