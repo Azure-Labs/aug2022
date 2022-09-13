@@ -9,9 +9,6 @@ az extension add --name containerapp --upgrade
 # Register namespace
 az provider register --namespace Microsoft.App
 
-# Check namespace
-# az provider show -n Microsoft.App
-
 # Azure Monitor Logs namespace
 az provider register --namespace Microsoft.OperationalInsights
 

@@ -104,3 +104,10 @@ Review the deployment on Azure portal
 6. Open and run deploy/bicep/01_Deploy.sh
 
 Review the deployment on Azure portal
+
+7. Run load test against one of the endpoints
+
+./load_test.sh <your site here>
+
+Forked and Credit
+ - https://blog.baeke.info/2022/05/26/quick-guide-to-azure-container-apps/
