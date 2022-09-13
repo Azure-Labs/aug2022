@@ -1,12 +1,10 @@
 RESOURCE_GROUP="sample-container-ae-app-rg"
 LOCATION="australiaeast" #ensure the location supports container app service
 LOG_ANALYTICS_WORKSPACE="sample-container-logs"
-SUB_ID="418488cd-175d-40c4-a5ea-e6db608334cd"
 CONTAINERAPPS_ENVIRONMENT="container-sample-env"
 
 # Follow Azure CLI prompts to authenticate to your subscription of choice
 az login
-az account set --subscription $SUB_ID
 
 # Create resource group
 echo "Create Resource Group"
