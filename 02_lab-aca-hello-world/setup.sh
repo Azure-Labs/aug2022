@@ -1,4 +1,5 @@
-# Azure Container Lab - Setup
+# LAB 02 - ACA Hello World
+# Azure Container Lab - setup.sh
 
 # Azure Cli Login
 # az login

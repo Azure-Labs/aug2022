@@ -1,4 +1,6 @@
-RESOURCE_GROUP="sample-container-ae-app-rg"
+# LAB 02 - ACA Hello World
+
+RESOURCE_GROUP="sample-container-simple-ae-app-rg"
 LOCATION="australiaeast" #ensure the location supports container app service
 LOG_ANALYTICS_WORKSPACE="sample-container-logs"
 CONTAINERAPPS_ENVIRONMENT="container-sample-env"
@@ -47,7 +49,7 @@ az containerapp create \
   --name my-container-app-2 \
   --resource-group $RESOURCE_GROUP \
   --environment $CONTAINERAPPS_ENVIRONMENT \
-  --image mcr.microsoft.com/azuredocs/containerapps-helloworld:latest \
+  --image mcr.microsoft.com/azuredocs/containerapps-helloworld:latest  \
   --target-port 80 \
   --ingress 'external' \
   --revisions-mode 'multiple' \

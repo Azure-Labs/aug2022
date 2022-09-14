@@ -1,7 +1,8 @@
-RESOURCE_GROUP="sample-container-ae-app-rg"
+# LAB 02 - ACA Hello World
+
+RESOURCE_GROUP="sample-container-simple-ae-app-rg"
 LOCATION="australiaeast" #ensure the location supports container app service
 LOG_ANALYTICS_WORKSPACE="sample-container-logs"
-SUB_ID="418488cd-175d-40c4-a5ea-e6db608334cd"
 CONTAINERAPPS_ENVIRONMENT="container-sample-env"
 
 # deploy hello-world with ingress external. Image latest hello-world
@@ -23,7 +24,8 @@ az containerapp update \
 
 az containerapp revision label add --name my-container-app-2 --resource-group $RESOURCE_GROUP --label 'staging' --revision 'my-container-app-2--rev2' --no-prompt --yes 
 
+echo "Set traffic split"
 az containerapp ingress traffic set \
   --name my-container-app-2 \
   --resource-group $RESOURCE_GROUP \
-  --revision-weight latest=80 --label-weight production=20
+  --revision-weight latest=50 my-container-app-2--rev2=50
