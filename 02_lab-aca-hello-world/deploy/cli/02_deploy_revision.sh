@@ -22,10 +22,10 @@ az containerapp update \
   --revision-suffix 'rev2' \
   --query configuration.ingress.fqdn
 
-az containerapp revision label add --name my-container-app-2 --resource-group $RESOURCE_GROUP --label 'staging' --revision 'my-container-app-2--rev2' --no-prompt --yes 
+# az containerapp revision label add --name my-container-app-2 --resource-group $RESOURCE_GROUP --label 'staging' --revision 'my-container-app-2--rev2' --no-prompt --yes 
 
 echo "Set traffic split"
 az containerapp ingress traffic set \
   --name my-container-app-2 \
   --resource-group $RESOURCE_GROUP \
-  --revision-weight latest=50 my-container-app-2--rev2=50
+  --revision-weight latest=50 my-container-app-2--rev1=50

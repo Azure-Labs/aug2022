@@ -78,6 +78,8 @@ link to content: https://docs.microsoft.com/en-us/azure/container-apps/revisions
 
 Azure CLI 
 
+** Makefile available
+
 1. Open /deploy/cli/01_deploy_initial.sh. Replace subscription id
 2. Run az login for subscription access
 3. Run /deploy/cli/01_deploy_initial.sh

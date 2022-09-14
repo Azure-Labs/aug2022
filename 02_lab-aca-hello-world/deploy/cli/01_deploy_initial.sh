@@ -6,7 +6,7 @@ LOG_ANALYTICS_WORKSPACE="sample-container-logs"
 CONTAINERAPPS_ENVIRONMENT="container-sample-env"
 
 # Follow Azure CLI prompts to authenticate to your subscription of choice
-az login
+az login --output none
 
 # Create resource group
 echo "Create Resource Group"
@@ -42,7 +42,7 @@ az containerapp create \
   --revision-suffix 'rev1' \
   --query configuration.ingress.fqdn
 
-az containerapp revision label add --name my-container-app --resource-group $RESOURCE_GROUP --label 'production' --revision 'my-container-app--rev1' --no-prompt --yes
+# az containerapp revision label add --name my-container-app --resource-group $RESOURCE_GROUP --label 'production' --revision 'my-container-app--rev1' --no-prompt --yes
 
 echo "Deploy 2nd container app - Multiple revision"
 az containerapp create \
@@ -56,4 +56,4 @@ az containerapp create \
   --revision-suffix 'rev1' \
   --query configuration.ingress.fqdn
 
-az containerapp revision label add --name my-container-app-2 --resource-group $RESOURCE_GROUP --label 'production' --revision 'my-container-app-2--rev1' --no-prompt --yes 
+# az containerapp revision label add --name my-container-app-2 --resource-group $RESOURCE_GROUP --label 'production' --revision 'my-container-app-2--rev1' --no-prompt --yes 
