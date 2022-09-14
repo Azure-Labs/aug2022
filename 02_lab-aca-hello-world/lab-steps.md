@@ -1,5 +1,5 @@
 
-## LAB ACA Hello World
+## LAB 02 - ACA Hello World
 
 Azure Container Apps is now generally available. Time for a quick guide
 
