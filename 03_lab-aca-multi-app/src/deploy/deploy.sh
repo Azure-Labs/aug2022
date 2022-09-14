@@ -3,7 +3,7 @@ LOCATION="australiaeast"
 
 az group create -g $RESOURCE_GROUP -l $LOCATION
 
-az deployment group create -g $RESOURCE_GROUP -f ./main.bicep \
+az deployment group create -g $RESOURCE_GROUP -f ./deploy/main.bicep \
     -p \
     minReplicas=0 \
     nodeImage='gavina01/aca-workshop-node-service:v1' \

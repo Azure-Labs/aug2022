@@ -1,0 +1,2 @@
+firstdeploy:
+	./deploy/deploy.sh
