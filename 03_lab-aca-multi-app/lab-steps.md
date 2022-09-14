@@ -47,10 +47,8 @@ Azure Bicep
 
 Review the deployment on Azure portal
 
-Lets now deploy a revision to container 2
+![Application](https://raw.githubusercontent.com/Azure-Samples/container-apps-store-api-microservice/main/assets/arch.png)
 
-4. Open /deploy/cli/02_deploy_revision.sh. Replace subscription id
-5. 02_deploy_revision.sh
 
 ## Fork
 https://github.com/Azure-Samples/container-apps-store-api-microservice

@@ -1,7 +1,5 @@
-RESOURCE_GROUP="sample-container-ae-app-rg"
-LOCATION="australiaeast" #ensure the location supports container app service
-LOG_ANALYTICS_WORKSPACE="sample-container-logs"
-SUB_ID="<subscription_id>"
-CONTAINERAPPS_ENVIRONMENT="container-sample-env"
+RESOURCE_GROUP_LAB02="sample-container-simple-ae-app-rg"
+RESOURCE_GROUP_LAB03="sample-container-ae-app-rg"
 
-az group delete --name $RESOURCE_GROUP --yes
+az group delete --name $RESOURCE_GROUP_LAB02 --yes
+az group delete --name $RESOURCE_GROUP_LAB03 --yes
