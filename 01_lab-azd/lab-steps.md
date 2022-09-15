@@ -522,4 +522,20 @@ Express App
 npx express-generator src --view ejs
 ```
 
+Dockerfile
+
+```Dockerfile
+FROM node:16.13-alpine
+
+EXPOSE 3000
+
+WORKDIR /app
+
+COPY . .
+
+RUN npm install
+
+CMD ["npm","run","start"]
+```
+
 
