@@ -6,7 +6,7 @@ LOG_ANALYTICS_WORKSPACE="sample-container-logs"
 CONTAINERAPPS_ENVIRONMENT="container-sample-env"
 
 # Follow Azure CLI prompts to authenticate to your subscription of choice
-az login --output none
+# az login --output none
 
 # Create resource group
 echo "Create Resource Group"
