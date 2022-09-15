@@ -16,7 +16,8 @@ Additional Document example and lab. Thought https://github.com/adamstephensen/f
 - Currently AZD is in beta and you can find the list of releases here: https://github.com/Azure/azure-dev/releases
 - There's support for multiple environments. 
 - Not intended for Production, even after being generally avaialble, it never should be. 
-- Currently in Preview. `0.1.0-beta.5`
+- Currently in Preview. 
+> `0.1.0-beta.5`
 
 -----
 **What Problem's will this solve for you?**
@@ -172,7 +173,42 @@ Source: https://github.com/venura9/azd
 
 Lets explore the `azd` itself first and deploy a sample application. 
 
-```bash
+```
+
+Available Commands:
+  deploy      Deploy the application's code to Azure.
+  down        Delete Azure resources for an application.
+  env         Manage environments.
+  help        Help about any command
+  infra       Manage Azure resources.
+  init        Initialize a new application.
+  login       Log in to Azure.
+  monitor     Monitor a deployed application.
+  pipeline    Manage GitHub Actions pipelines.
+  provision   Provision the Azure resources for an application.
+  restore     Restore application dependencies.
+  template    Manage templates.
+  up          Initialize application, provision Azure resources, and deploy your project with a single command.
+  version     Print the version number of Azure Developer CLI.
+```
+
+With the Azure Developer CLI, a typical developer workflow looks like this:
+
+1.  `azd init`: Create an application and initialize an environment using a sample template in your preferred language.
+2.  `azd provision`: Provision the necessary resources for your application on Azure.
+3.  `azd deploy`: Deploy your application to Azure.
+4.  `azd monitor`: Monitor your application’s behavior and performance and validate deployments.
+5.  `azd pipeline config`: Create and manage CI/CD (continuous integration and continuous delivery).
+
+````bash
+
+# Ceate the infra and deploy the application inteactively 
+azd up --template todo-nodejs-mongo-aca
+
+# Destroy the infrastrcture
+azd down
+````
+
 
 ```
 
@@ -195,9 +231,93 @@ Lets explore the `azd` itself first and deploy a sample application.
 
 Create the empty project. 
 
+```bash
+azd init -e dev -l australiaeast --subscription <subscription_id/name>
+```
 
+Use empty template
+
+```
+? Select a project template  [Use arrows to move, type to filter]
+> Empty Template
+  Azure-Samples/todo-python-mongo-swa-func
+  Azure-Samples/todo-nodejs-mongo
+  Azure-Samples/todo-python-mongo
+  Azure-Samples/todo-csharp-cosmos-sql
+  Azure-Samples/todo-nodejs-mongo-aca
+  Azure-Samples/todo-python-mongo-aca
+```
+
+Update your `azure.yaml`
+
+```yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: aca-example
+services:
+  app:
+    project: src
+    language: js
+    host: containerapp
+```
+
+Create the infra folder
+``` bash
+mkdir infra && cd infra
+```
+
+You infra as code
+
+Parameters: 
+
+`main.parameters.json`
+
+```main.parameters.json
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "name": {
+        "value": "${AZURE_ENV_NAME}"
+      },
+      "location": {
+        "value": "${AZURE_LOCATION}"
+      },
+      "image": {
+        "value": ""
+      }
+    }
+  }
+```
+
+`app.parameters.json`
+
+```app.parameters.json
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "environmentName": {
+        "value": "${AZURE_APP_ENV_NAME}"
+      },
+      "appName": {
+        "value": "${AZURE_APP_NAME}"
+      },
+      "appId": {
+        "value": "${AZURE_APP_NAME}"
+      },
+      "image": {
+        "value": "${SERVICE_APP_IMAGE_NAME}"
+      }
+    }
+}
+```
+
+
+Express App
 
 ```bash
 npx express-generator src --view ejs
 ```
+
 
