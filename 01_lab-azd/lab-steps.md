@@ -538,4 +538,8 @@ RUN npm install
 CMD ["npm","run","start"]
 ```
 
-
+.gitignore at the root
+```
+.azure
+src/node_modules
+```
