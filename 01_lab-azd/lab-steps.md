@@ -290,6 +290,52 @@ Parameters:
   }
 ```
 
+
+
+`main.bicep`
+
+```main.bicep
+targetScope = 'subscription'
+
+@minLength(1)
+@maxLength(64)
+@description('Name of the the environment which is used to generate a short unique hash used in all resources.')
+param name string
+
+@minLength(1)
+@description('Primary location for all resources')
+param location string
+
+@description('Container image to be deployed')
+param image string
+
+
+var resourceToken = toLower(uniqueString(subscription().id, name, location))
+
+resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+  name: 'rg-${name}'
+  location: location
+}
+
+module app 'app.bicep' = {
+  name: 'app'
+  scope: rg
+  params: {
+    appName: name
+    environmentName: resourceToken
+    appId: name
+    location: location
+    image: image
+  }
+}
+
+output AZURE_CONTAINER_REGISTRY_ENDPOINT string = app.outputs.AZURE_CONTAINER_REGISTRY_ENDPOINT
+output AZURE_CONTAINER_REGISTRY_NAME string = app.outputs.AZURE_CONTAINER_REGISTRY_NAME
+output AZURE_APP_NAME string = name
+output AZURE_APP_ENV_NAME string = resourceToken
+```
+
+
 `app.parameters.json`
 
 ```app.parameters.json
@@ -311,6 +357,162 @@ Parameters:
       }
     }
 }
+```
+
+`app.bicep`
+
+```app.bicep
+param environmentName string
+param image string
+param appName string
+param appId string
+param logAnalyticsWorkspaceName string = 'logs-${environmentName}'
+param appInsightsName string = 'appins-${environmentName}'
+param location string = resourceGroup().location
+
+var tags = { 'azd-env-name': 'app' }
+
+resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-03-01-preview' = {
+  name: logAnalyticsWorkspaceName
+  location: location
+  properties: any({
+    retentionInDays: 30
+    features: {
+      searchVersion: 1
+    }
+    sku: {
+      name: 'PerGB2018'
+    }
+  })
+}
+
+resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
+  name: appInsightsName
+  location: location
+  kind: 'web'
+  properties: {
+    Application_Type: 'web'
+    WorkspaceResourceId:logAnalyticsWorkspace.id
+  }
+}
+
+// https://github.com/Azure/azure-rest-api-specs/blob/Microsoft.App-2022-03-01/specification/app/resource-manager/Microsoft.App/preview/2022-01-01-preview/ManagedEnvironments.json
+resource environment 'Microsoft.App/managedEnvironments@2022-03-01' = {
+  name: 'me-${environmentName}'
+  location: location
+  properties: {
+    daprAIInstrumentationKey:appInsights.properties.InstrumentationKey
+    appLogsConfiguration: {
+      destination: 'log-analytics'
+      logAnalyticsConfiguration: {
+        customerId: logAnalyticsWorkspace.properties.customerId
+        sharedKey: logAnalyticsWorkspace.listKeys().primarySharedKey
+      }
+    }
+  }
+  resource daprComponent 'daprComponents@2022-03-01' = {
+    name: 'mycomponent'
+    properties: {
+      componentType: 'state.azure.cosmosdb'
+      version: 'v1'
+      ignoreErrors: true
+      initTimeout: '5s'
+      secrets: [
+        {
+          name: 'masterkeysecret'
+          value: 'secretvalue'
+        }
+      ]
+      metadata: [
+        {
+          name: 'masterkey'
+          secretRef: 'masterkeysecret'
+        }
+        {
+          name: 'foo'
+          value: 'bar'
+        }
+      ]
+      scopes:[
+        appId
+      ]
+    }
+  }
+}
+
+// https://github.com/Azure/azure-rest-api-specs/blob/Microsoft.App-2022-01-01-preview/specification/app/resource-manager/Microsoft.App/preview/2022-01-01-preview/ContainerApps.json
+resource app 'Microsoft.App/containerApps@2022-03-01' ={
+  tags: tags
+  name: 'devapp'
+  location: location
+  properties:{
+    managedEnvironmentId: environment.id
+    configuration: {
+      ingress: {
+        targetPort: 3000
+        external: true
+      }
+      dapr: {
+        enabled: true
+        appId: appId
+        appProtocol: 'http'
+        appPort: 80
+      }
+      secrets: [
+        {
+          name: 'registry-password'
+          value: containerRegistry.listCredentials().passwords[0].value
+        }
+      ]
+      registries: [
+        {
+          server: '${containerRegistry.name}.azurecr.io'
+          username: containerRegistry.name
+          passwordSecretRef: 'registry-password'
+        }
+      ]
+    }
+    template: {
+      containers: [
+        {
+          image: image != '' ? image : 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
+          name: 'app'
+          env: [
+            {
+                name: 'HTTP_PORT'
+                value: '3000'
+            }
+        ]
+        }
+      ]
+    }
+  }
+}
+
+
+// 2022-02-01-preview needed for anonymousPullEnabled
+resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-02-01-preview' = {
+  name: 'cr${environmentName}'
+  location: location
+  sku: {
+    name: 'Standard'
+  }
+  properties: {
+    adminUserEnabled: true
+    anonymousPullEnabled: false
+    dataEndpointEnabled: false
+    encryption: {
+      status: 'disabled'
+    }
+    networkRuleBypassOptions: 'AzureServices'
+    publicNetworkAccess: 'Enabled'
+    zoneRedundancy: 'Disabled'
+  }
+}
+
+output AZURE_CONTAINER_REGISTRY_ENDPOINT string = containerRegistry.properties.loginServer
+output AZURE_CONTAINER_REGISTRY_NAME string = containerRegistry.name
+
 ```
 
 
